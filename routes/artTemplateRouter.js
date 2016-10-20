@@ -2,6 +2,10 @@ var express = require('express');
 
 var artTmlRouter = express.Router();
 
+var mongoose = require('mongoose');
+
+var Dishes = require('../models/dishes');
+
 // artTmlRouter.all(function(req, res, next) {
 
 // }).get('/', function(req, res, next) {
@@ -34,9 +38,17 @@ artTmlRouter.get('/', function(req, res, next) {
         }, {
             id: '3',
             name: 'chu'
-        }]
+        }],
+        dishes:[]
     };
-    res.render('arttemplate', data);
+
+    Dishes.find({},function (err, dishes) {
+        if (err) throw  err;
+        data.dishes=dishes;
+        console.log(dishes);
+        res.render('arttemplate', data);
+    })
+
     console.log('success');
 });
 
