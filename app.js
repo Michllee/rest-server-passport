@@ -30,17 +30,6 @@ var artTmlRouter = require('./routes/artTemplateRouter');
 var template = require('art-template');
 var app = express();
 
-var url = 'mongodb://localhost:27017/conFusion';
-mongoose.connect(url);
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console,'Connecction error:'));
-db.once('open',function(){
-
-  console.log('Connected correctly to server');
-});
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -61,7 +50,7 @@ app.use(cookieParser());
 var User = require('./models/user');
 app.use(passport.initialize());
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser);
+passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
