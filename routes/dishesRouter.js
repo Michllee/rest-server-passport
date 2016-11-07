@@ -42,7 +42,9 @@ dishesRouter.route('/')
 
     .post(Verify.verifyOrdinaryUser, function(req, res, next){
         Dishes.create(req.body, function (err, dish) {
-            if (err) throw err;
+            if (err) {
+                return res.status(500).json({"err":err});
+            };
             console.log('Dish created!');
             var id = dish.id;
             res.writeHead(200,{
