@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 
 <div class="list">
@@ -37,6 +38,12 @@
         </tr>
         {{/each}}
     </table>
+
+
+    <form action="/saveimg/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file1" />
+        <button type="submit">submit</button>
+    </form>
 
 </div>
 

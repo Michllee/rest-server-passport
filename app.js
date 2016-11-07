@@ -26,7 +26,7 @@ var users = require('./routes/users');
 var dishesRouter = require('./routes/dishesRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var artTmlRouter = require('./routes/artTemplateRouter');
-
+var saveImageRouter = require('./routes/saveImageRouter');
 var template = require('art-template');
 var app = express();
 
@@ -62,6 +62,8 @@ app.use('/users', users);
 app.use('/dishes',dishesRouter);
 app.use('/leader',leaderRouter);
 app.use('/arttemplate', artTmlRouter);
+
+app.use('/saveimg',saveImageRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -95,6 +97,3 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-
-
-///
