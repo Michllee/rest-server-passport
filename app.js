@@ -28,6 +28,8 @@ var leaderRouter = require('./routes/leaderRouter');
 var artTmlRouter = require('./routes/artTemplateRouter');
 var saveImageRouter = require('./routes/saveImageRouter');
 var template = require('art-template');
+
+
 var app = express();
 
 // view engine setup
