@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="http://img3.tuniucdn.com/s/20141028/common/reset.css" rel="stylesheet">
+    <script type="text/javascript" src="http://img4.tuniucdn.com/j/201406191714/3rd/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+<style>
+    
+    .slider-contain {
+        height: 450px;
+    }
+    
+    .slider-contain ul {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .slider-item {
+       
+        height: 100%;
+        position: absolute;
+    }
+
+    .slider-item.current {
+        width:100%;
+        right:0;
+        z-index: 20;
+    }
+    .slider-item.pre {
+        width: 100%;
+        z-index: 10;
+    }
+    .sitem-piccon {
+        height: 100%;
+    }
+    
+    .animi-left {
+        animation: animi-left .8s linear both;
+
+    }
+    
+    .animi-right {
+        animation: animi-left .8s linear both;
+
+    }
+    
+    @keyframes animi-right {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0%);
+        }
+    }
+    
+    @keyframes animi-left {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0%);
+        }
+    }
+</style>
+
+<div class="slider-contain">
+    <ul>
+        <li class="slider-item current">
+            <a href="">
+                <div class="sitem-piccon" style="background:url('http://m.tuniucdn.com/fb2/t1/G1/M00/ED/F5/Cii9EFdOUDqIVsHAAAJOzT2kxz0AAGRXAGIuLAAAk7l017.jpg') top center no-repeat;">
+                    <div class="text-panel">
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li class="slider-item">
+            <a href="">
+                <div class="sitem-piccon" style="background:url('http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg') top center no-repeat;">
+                    <div class="text-panel">
+                    </div>
+                </div>
+            </a>
+        </li>
+
+        <li class="slider-item">
+            <a href="">
+                <div class="sitem-piccon" style="background:url('http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/00/847af0492b887c670f4a111d683da2ed.jpg') top center no-repeat;">
+                    <div class="text-panel">
+                    </div>
+                </div>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<script>
+    function hotNewSlider() {
+        var $item = $('.slider-item');
+        var num = $item.length;
+        var currentIndex = 0;
+        var preIndex = num -1;
+        var nextIndex = 1;
+
+        function changeIndex(){
+            currentIndex = $('.slider-item.current').index();
+            preIndex = currentIndex == 0 ? num-1 :currentIndex-1;
+            nextIndex = currentIndex == num-1 ? 0 : currentIndex +1; 
+        }
+
+        function slide(){
+            setInterval(function(){
+            $item.eq(currentIndex).removeClass('current').addClass('pre');
+            $item.eq(nextIndex).addClass('current animi-right');
+            setTimeout(function(){
+                $item.eq(preIndex).removeClass('pre animi-right');
+            },800)
+            changeIndex();
+
+            },5000)
+        }
+        slide();
+        
+        
+
+    }
+
+    hotNewSlider();
+</script>
+</body>
+</html>
+<style>
+    
