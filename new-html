@@ -28,7 +28,7 @@
 
     .slider-item.current {
         width:100%;
-        right:0;
+        
         z-index: 20;
     }
     .slider-item.pre {
@@ -40,11 +40,13 @@
     }
     
     .animi-left {
-        animation: animi-left .8s linear both;
+        right:0;
+        animation: animi-right .8s linear both;
 
     }
     
     .animi-right {
+        left: 0;
         animation: animi-left .8s linear both;
 
     }
@@ -97,6 +99,8 @@
         </li>
 
     </ul>
+    <div class="left-btn">sadasd</div>
+    <div class="right-btn">asdasdas</div>
 </div>
 
 <script>
@@ -107,24 +111,48 @@
         var preIndex = num -1;
         var nextIndex = 1;
 
+        var timerInt ;
+
         function changeIndex(){
             currentIndex = $('.slider-item.current').index();
             preIndex = currentIndex == 0 ? num-1 :currentIndex-1;
             nextIndex = currentIndex == num-1 ? 0 : currentIndex +1; 
         }
 
-        function slide(){
-            setInterval(function(){
+        function slide(direct){
+            
             $item.eq(currentIndex).removeClass('current').addClass('pre');
-            $item.eq(nextIndex).addClass('current animi-right');
+            $item.eq(nextIndex).addClass('current animi-'+direct);
             setTimeout(function(){
-                $item.eq(preIndex).removeClass('pre animi-right');
+                $item.eq(preIndex).removeClass('pre animi-'+direct);
             },800)
             changeIndex();
 
-            },5000)
+            
         }
-        slide();
+
+
+        function autoSlider(){
+            timerInt = setInterval(function(){
+                slide('right');
+            },5000)
+
+        }
+        autoSlider('left');
+
+
+        $('.slider-contain').on('mouseover', function(){
+            clearInterval(timerInt);
+            $('.left-btn, .right-btn').show();
+        });
+        $('.slider-contain').on('mouseout', function(){
+            autoSlider('right');
+            $('.left-btn, .right-btn').hide();
+        })
+        // $('').on('click',function(){
+        //     slide('right');
+        // });
+        // $()
         
         
 
