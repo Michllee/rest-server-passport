@@ -82,6 +82,126 @@
         </li>
         <li class="slider-item">
             <a href="">
+<style>
+    .slider-contain {
+        position: relative;
+        height: 450px;
+    }
+    
+    .slider-contain ul {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .slider-item {
+        height: 100%;
+        position: absolute;
+    }
+    
+    .slider-item.current {
+        width: 100%;
+        z-index: 10;
+    }
+    
+    .slider-item.pre {
+        width: 100%;
+        z-index: 20;
+    }
+    
+    .sitem-piccon {
+        height: 100%;
+    }
+    
+    .animi-left {
+        right: 0;
+        animation: rightSlide .8s linear both;
+    }
+    
+    .animi-right {
+        left: 0;
+        animation: leftSlide .8s linear both;
+    }
+    
+    .click-btn {
+        display: none;
+        position: absolute;
+        width: 49px;
+        height: 100px;
+        top: 50%;
+        background: url('http://img1.tuniucdn.com/site/file/tn-slide/img/sprite.png') center no-repeat;
+        margin-top: -50px;
+        z-index: 50;
+    }
+    
+    .left-btn {
+        left: 0;
+        background-position: 0 0;
+    }
+    
+    .right-btn {
+        background-position: -52px 0;
+        right: 0;
+    }
+ 
+    @-webkit-keyframes leftSlide {
+        0% {
+            -webkit-transform: translateX(25%);
+            transform: translateX(25%)
+        }
+        to {
+            -webkit-transform: translateX(0);
+            transform: translateX(0)
+        }
+    }
+    
+    @keyframes leftSlide {
+        0% {
+            -webkit-transform: translateX(25%);
+            transform: translateX(25%)
+        }
+        to {
+            -webkit-transform: translateX(0);
+            transform: translateX(0)
+        }
+    }
+    
+    @-webkit-keyframes rightSlide {
+        0% {
+            -webkit-transform: translateX(-25%);
+            transform: translateX(-25%)
+        }
+        to {
+            -webkit-transform: translateX(0);
+            transform: translateX(0)
+        }
+    }
+    
+    @keyframes rightSlide {
+        0% {
+            -webkit-transform: translateX(-25%);
+            transform: translateX(-25%)
+        }
+        to {
+            -webkit-transform: translateX(0);
+            transform: translateX(0)
+        }
+    }
+</style>
+
+<div class="slider-contain">
+    <ul>
+        <li class="slider-item current">
+            <a href="">
+                <div class="sitem-piccon" style="background:url('http://m.tuniucdn.com/fb2/t1/G1/M00/ED/F5/Cii9EFdOUDqIVsHAAAJOzT2kxz0AAGRXAGIuLAAAk7l017.jpg') top center no-repeat;">
+                    <div class="text-panel">
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li class="slider-item">
+            <a href="">
                 <div class="sitem-piccon" style="background:url('http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg') top center no-repeat;">
                     <div class="text-panel">
                     </div>
@@ -99,8 +219,8 @@
         </li>
 
     </ul>
-    <div class="left-btn">sadasd</div>
-    <div class="right-btn">asdasdas</div>
+    <div class="click-btn left-btn"></div>
+    <div class="click-btn right-btn"></div>
 </div>
 
 <script>
@@ -108,57 +228,71 @@
         var $item = $('.slider-item');
         var num = $item.length;
         var currentIndex = 0;
-        var preIndex = num -1;
+        var preIndex = num - 1;
         var nextIndex = 1;
 
-        var timerInt ;
+        var timerInt;
 
-        function changeIndex(){
+        function changeIndex() {
             currentIndex = $('.slider-item.current').index();
-            preIndex = currentIndex == 0 ? num-1 :currentIndex-1;
-            nextIndex = currentIndex == num-1 ? 0 : currentIndex +1; 
+            preIndex = currentIndex == 0 ? num - 1 : currentIndex - 1;
+            nextIndex = currentIndex == num - 1 ? 0 : currentIndex + 1;
         }
 
-        function slide(direct){
-            
+        function slide(direct) {
+
             $item.eq(currentIndex).removeClass('current').addClass('pre');
-            $item.eq(nextIndex).addClass('current animi-'+direct);
-            setTimeout(function(){
-                $item.eq(preIndex).removeClass('pre animi-'+direct);
-            },800)
+            $item.eq(nextIndex).addClass('current animi-' + direct);
+            $item.eq(currentIndex).animate({
+                "width": 0
+            }, 800, function() {
+                this.style.width = "";
+                $item.eq(preIndex).removeClass().addClass('slider-item');
+            });
+
             changeIndex();
 
-            
+
         }
 
 
-        function autoSlider(){
-            timerInt = setInterval(function(){
+        function autoSlider() {
+            timerInt = setInterval(function() {
                 slide('right');
-            },5000)
+            }, 5000)
 
         }
         autoSlider('left');
 
 
-        $('.slider-contain').on('mouseover', function(){
+        $('.slider-contain').on('mouseover', function() {
             clearInterval(timerInt);
             $('.left-btn, .right-btn').show();
         });
-        $('.slider-contain').on('mouseout', function(){
+        $('.slider-contain').on('mouseout', function() {
             autoSlider('right');
             $('.left-btn, .right-btn').hide();
-        })
-        // $('').on('click',function(){
-        //     slide('right');
-        // });
-        // $()
-        
-        
+        });
+        $('.left-btn').on('click', function() {
+            slide('left');
+        });
+        $('.right-btn').on('click', function() {
+            slide('right');
+        });
+
+
 
     }
 
     hotNewSlider();
+
+    $('.txtCity').focus(function() {
+        console.log(1);
+        $('.bannermask').show();
+    }).blur(function() {
+        console.log(2);
+        $('.bannermask').hide();
+    })
 </script>
 </body>
 </html>
