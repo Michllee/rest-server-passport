@@ -27,6 +27,8 @@ var dishesRouter = require('./routes/dishesRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var artTmlRouter = require('./routes/artTemplateRouter');
 var saveImageRouter = require('./routes/saveImageRouter');
+//2016.12。13 新建
+var resumeRouter = require('./routes/resumeRouter');
 var template = require('art-template');
 
 
@@ -64,7 +66,7 @@ app.use('/users', users);
 app.use('/dishes',dishesRouter);
 app.use('/leader',leaderRouter);
 app.use('/arttemplate', artTmlRouter);
-
+app.use('/resume',resumeRouter);
 app.use('/saveimg',saveImageRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
