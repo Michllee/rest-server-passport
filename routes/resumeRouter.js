@@ -11,39 +11,67 @@ resumeRouter.use(bodyParser.json());
 
 
 resumeRouter.route('/')
-    .post(function(req, res, next){
-        Resume.create(req.body, function(err, resume){
-            if(err) {
+    .post(function (req, res, next) {
+        Resume.create(req.body, function (err, resume) {
+            if (err) {
                 next(err);
             }
             console.log(resume);
-            res.json(200,{
-                "success":true,
-                "data":resume
+            res.status(200).json({
+                "success": true,
+                "data": resume
             });
         })
     })
-resumeRouter.route('/:nameID')
-    .get( function (req, res, next) {
-        var name = req.body.nameId
+resumeRouter.route('/:nameId')
+    .get(function (req, res, next) {
+        var name = req.params.nameId;
         var data = {
             tit: '简历',
             content: {}
         }
 
-        Resume.find({})
-        res.end('ok get')
+        Resume.find({ 'name': name }, function (err, resume) {
+            data.content = resume[0];
+            res.render('', data);
+            // res.status(200).json({
+            //     success:true,
+            //     data:resume[0]
+            // })
+        })
 
 
     })
-    .delete(function(req, res, next){
-        Resume.findByIdAndRemove({});
-        res.json(200, {
-            "success":true,
-            "msg":"delete all"
+    .delete(function (req, res, next) {
+        var name = req.params.nameId;
+        Resume.remove({ name: name }, function (err, res) {
+            if (err) {
+                res.ststus(200).json({
+                    "success": false,
+                    "msg": "delete err"
+                })
+            }
+            res.ststus(200).json({
+                "success": true,
+                "msg": "delete " + name
+            })
+        });
+    })
+
+resumeRouter.route('/:nameId/descrips')
+    .get(function (req, res, next) {
+        Resume.find({ 'name': req.params.nameId }, function (err, resume) {
+            if (err) {
+                res.status(300).json({
+                    'success': fasle,
+                    'msg': err
+                })
+            }
+            res.status(200).json({
+                'success': true,
+                'descrips': resume[0].descrips
+            })
         })
     })
 
-
-
-    module.exports = resumeRouter;
+module.exports = resumeRouter;
