@@ -45,7 +45,6 @@ artTmlRouter.get('/', function(req, res, next) {
     Dishes.find({},function (err, dishes) {
         if (err) throw  err;
         data.dishes=dishes;
-        console.log(dishes);
         res.render('arttemplate', data);
     })
 

@@ -26,8 +26,12 @@ var users = require('./routes/users');
 var dishesRouter = require('./routes/dishesRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var artTmlRouter = require('./routes/artTemplateRouter');
-
+var saveImageRouter = require('./routes/saveImageRouter');
+//2016.12。13 新建
+var resumeRouter = require('./routes/resumeRouter');
 var template = require('art-template');
+
+
 var app = express();
 
 // view engine setup
@@ -40,7 +44,7 @@ app.engine('.html', template.__express);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,6 +66,8 @@ app.use('/users', users);
 app.use('/dishes',dishesRouter);
 app.use('/leader',leaderRouter);
 app.use('/arttemplate', artTmlRouter);
+app.use('/resume',resumeRouter);
+app.use('/saveimg',saveImageRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
